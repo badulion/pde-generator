@@ -1,0 +1,4 @@
+numpy
+scipy
+py-pde
+imageio

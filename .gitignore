@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+
+venv/
+figures/
+data/*
+output/
+outputs/
+**/local/*
+
+kubernetes/
+.vscode/
+
+**tmp/

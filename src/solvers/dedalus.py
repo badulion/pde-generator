@@ -53,6 +53,7 @@ def solve_equation(eq_poly: List,
                    initial_condition: np.ndarray,
                    timestepper: d3.MultistepIMEX = d3.SBDF4,
                    step_size: float = 1e-2,
+                   save_dt: float = 0.1,
                    t_max: float = 128,
                    num_workers: int = 1):
     
@@ -66,8 +67,8 @@ def solve_equation(eq_poly: List,
     # Bases
     coords = d3.CartesianCoordinates('x', 'y')
     dist = d3.Distributor(coords, dtype=dtype)
-    xbasis = d3.RealFourier(coords['x'], size=Nx, bounds=(0, Nx), dealias=dealias)
-    ybasis = d3.RealFourier(coords['y'], size=Ny, bounds=(0, Nx), dealias=dealias)
+    xbasis = d3.RealFourier(coords['x'], size=Nx, bounds=(0, Nx//4), dealias=dealias)
+    ybasis = d3.RealFourier(coords['y'], size=Ny, bounds=(0, Nx//4), dealias=dealias)
 
 
     # Fields
@@ -100,7 +101,7 @@ def solve_equation(eq_poly: List,
     # Main loop
     bar_format = "{l_bar}{bar}| {n:.02f}/{total:.02f}"
     prog_bar = tqdm.tqdm(total=t_max, bar_format=bar_format)
-
+    next_save_at = save_dt
     while solver.proceed:
         solver.step(step_size)
         prog_bar.update(step_size)
@@ -108,10 +109,11 @@ def solve_equation(eq_poly: List,
             raise RuntimeError("Equation is not well-posed, stopping!")
         elif np.max(np.abs(u['g'])) > 1e+3:
             raise RuntimeError("Equation is not well-posed, stopping!")
-        if solver.iteration % 100 == 0:
+        if solver.sim_time > next_save_at:
             u.change_scales(1)
             u_list.append(np.copy(u['g']))
             t_list.append(solver.sim_time)
+            next_save_at += save_dt
 
     # Convert storage lists to arrays
     u_array = np.array(u_list)

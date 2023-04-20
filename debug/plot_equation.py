@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-from src.utils.animation import animate_multiple_simulations
+from src.utils.animation import animate_multiple_simulations, animate_simulation
 import io
 import numpy as np
 import tarfile
@@ -16,8 +16,5 @@ def read_simulation_from_tar(tarfile_path: str, sim_num: int = 0):
         X = np.load(bytes_io)
         return X
 
-X1 = read_simulation_from_tar("data/batch_1_grid_128_degree_2_order_4_coef_10_terms_7.tar", 0)
-X2 = read_simulation_from_tar("data/batch_1_grid_128_degree_2_order_4_coef_10_terms_7.tar", 1)
-X3 = read_simulation_from_tar("data/batch_1_grid_128_degree_2_order_4_coef_10_terms_7.tar", 2)
-X4 = read_simulation_from_tar("data/batch_1_grid_128_degree_2_order_4_coef_10_terms_7.tar", 3)
-animate_multiple_simulations([X1, X2, X3, X4])
+X1 = read_simulation_from_tar("data/batch_1_grid_128_degree_1_order_2_coef_10.0_terms_5.tar", 1)
+animate_simulation(X1)

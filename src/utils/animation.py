@@ -33,7 +33,8 @@ def animate_multiple_simulations(u_array_list: List[np.ndarray], output_path: st
         for i, u_array in enumerate(u_array_list):
             im = ax[i].imshow(u_array[step_num], vmin=-1, vmax=1)
             #fig.colorbar(im)
-        fig.savefig(f"tmp/{step_num}.png")
+        plt.tight_layout()
+        fig.savefig(f"tmp/{step_num}.png", bbox_inches='tight')
         plt.close()
 
     os.makedirs("tmp", exist_ok=True)

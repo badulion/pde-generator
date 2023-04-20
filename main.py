@@ -1,9 +1,8 @@
 import os
-
 # set environment variables
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = f"16"
-os.environ["NUMEXPR_MAX_THREADS"] = f"16"
+#os.environ["OMP_NUM_THREADS"] = "1"
+#os.environ["NUMEXPR_NUM_THREADS"] = f"16"
+#os.environ["NUMEXPR_MAX_THREADS"] = f"16"
 
 import numpy as np
 import warnings
@@ -22,9 +21,10 @@ if __name__ == "__main__":
     parser.add_argument('--batch', '-b', type=int, default=1, help='batch of equations')
     parser.add_argument('--grid-size', '-g', type=int, default=128, help='Size of the grid')
     parser.add_argument('--max-equation-degree', '-d', type=int, default=2, help='Max degree of the equation (1 for linear only)')
-    parser.add_argument('--max-equation-order', '-o', type=int, default=4, help='Max order of the equation')
-    parser.add_argument('--max-coef', '-c', type=float, default=10, help='Max absolute value of coefficient for each term')
+    parser.add_argument('--max-equation-order', '-o', type=int, default=2, help='Max order of the equation')
+    parser.add_argument('--max-coef', '-c', type=float, default=1, help='Max absolute value of coefficient for each term')
     parser.add_argument('--max-terms', '-t', type=int, default=7, help='Max number of different terms in the equation')
+    parser.add_argument('--save-dt', '-dt', type=float, default=1, help='How often to save the state')
 
     args = parser.parse_args()
 

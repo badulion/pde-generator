@@ -54,12 +54,14 @@ def solve_equation(eq_poly: List,
                    timestepper: d3.MultistepIMEX = d3.SBDF4,
                    step_size: float = 1e-2,
                    save_dt: float = 0.1,
+                   domain_bounds: Tuple[int] = (1,1),
                    t_max: float = 128,
                    num_workers: int = 1):
     
 
     # Parameters
     Nx, Ny = initial_condition.shape
+    Dx, Dy = domain_bounds
 
     dealias = 3/2
     dtype = np.float64
@@ -67,8 +69,11 @@ def solve_equation(eq_poly: List,
     # Bases
     coords = d3.CartesianCoordinates('x', 'y')
     dist = d3.Distributor(coords, dtype=dtype)
-    xbasis = d3.RealFourier(coords['x'], size=Nx, bounds=(0, Nx//4), dealias=dealias)
-    ybasis = d3.RealFourier(coords['y'], size=Ny, bounds=(0, Nx//4), dealias=dealias)
+    xbasis = d3.RealFourier(coords['x'], size=Nx, bounds=(0, Dx), dealias=dealias)
+    ybasis = d3.RealFourier(coords['y'], size=Ny, bounds=(0, Dy), dealias=dealias)
+
+    xgrid, ygrid = np.meshgrid(xbasis.global_grid(scale=1).ravel(), ybasis.global_grid(scale=1).ravel())
+    points = np.stack([xgrid, ygrid])
 
 
     # Fields
@@ -119,4 +124,4 @@ def solve_equation(eq_poly: List,
     u_array = np.array(u_list)
     t_array = np.array(t_list)
 
-    return u_array, t_array
+    return u_array, t_array, points

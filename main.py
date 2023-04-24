@@ -25,6 +25,7 @@ def solve_equation_from_str(args):
             f.write(args.equation)
         np.save(args.save_path+"_data.npy", data)
         np.save(args.save_path+"_points.npy", points)
+        np.save(args.save_path+"_times.npy", times)
     except RuntimeError:
         warnings.warn(f"Seed {args.seed} produces an unsolvable system. Skipping.", RuntimeWarning)
 

@@ -39,7 +39,6 @@ def dedalus_eq_str_from_poly(eq_poly: List[Any]):
         
     linear_terms = filter(lambda term: len(term) == 2 and term[1][1] == 1, eq_poly)
     nonlinear_terms = filter(lambda term: len(term) > 2, eq_poly)
-    #return str_from_one_term(next(nonlinear_terms))
 
     linear_terms_str = [str_from_one_term(term, sign=-1) for term in linear_terms]
     nonlinear_terms_str = [str_from_one_term(term, sign=1) for term in nonlinear_terms]

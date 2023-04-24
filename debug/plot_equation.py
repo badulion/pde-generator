@@ -8,7 +8,7 @@ import numpy as np
 import tarfile
 import fnmatch
 
-def read_simulation_from_tar(tarfile_path: str, sim_num: int = 0):
+def read_simulation_from_tar_by_id(tarfile_path: str, sim_num: int = 0):
     with tarfile.open(tarfile_path) as f:
         data_list = fnmatch.filter(f.getnames(), "*.data")
         bytes = f.extractfile(data_list[sim_num]).read()
@@ -16,5 +16,12 @@ def read_simulation_from_tar(tarfile_path: str, sim_num: int = 0):
         X = np.load(bytes_io)
         return X
 
-X1 = read_simulation_from_tar("data/batch_1_grid_128_degree_1_order_2_coef_10.0_terms_5.tar", 1)
+def read_simulation_from_tar_by_name(tarfile_path: str, seed_num: int = 0):
+    with tarfile.open(tarfile_path) as f:
+        bytes = f.extractfile(f"{seed_num}.data").read()
+        bytes_io = io.BytesIO(bytes)
+        X = np.load(bytes_io)
+        return X
+X1 = read_simulation_from_tar_by_name("data/batch_2_grid_128_degree_2_order_2_coef_1_terms_7.tar", 190013844)
+X1 = np.load("data/example_data.npy")
 animate_simulation(X1)

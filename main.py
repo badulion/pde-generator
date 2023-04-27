@@ -23,7 +23,8 @@ def solve_equation_from_str(args):
         data, times, points = solve_equation(equation_as_poly, 
                                              initial_condition, 
                                              domain_bounds=(args.domain_bounds,args.domain_bounds),
-                                             t_max=args.t_max)
+                                             t_max=args.t_max,
+                                             save_dt=args.save_dt)
         # save equation
         if not os.path.exists(args.save_dir):
             os.makedirs(args.save_dir, exist_ok=True)
@@ -57,7 +58,8 @@ def solve_batch_of_random_equations(args):
             data, times, points = solve_equation(eq, 
                                                  initial_condition, 
                                                  domain_bounds=(args.domain_bounds,args.domain_bounds),
-                                                 t_max=args.t_max)
+                                                 t_max=args.t_max,
+                                                 save_dt=args.save_dt)
             # save equation
             write_str_to_tar('\n'.join(eq_tokens), f"{seed}.tokens", output_tar_path)
             write_str_to_tar(eq_str, f"{seed}.equation", output_tar_path)

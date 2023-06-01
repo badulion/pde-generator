@@ -22,6 +22,6 @@ def read_simulation_from_tar_by_name(tarfile_path: str, seed_num: int = 0):
         bytes_io = io.BytesIO(bytes)
         X = np.load(bytes_io)
         return X
-X1 = read_simulation_from_tar_by_name("data/batch_2_grid_128_degree_2_order_2_coef_1_terms_7.tar", 190013844)
+#X1 = read_simulation_from_tar_by_name("data/batch_2_grid_128_degree_2_order_2_coef_1_terms_7.tar", 190013844)
 X1 = np.load("data/example_data.npy")
 animate_simulation(X1)

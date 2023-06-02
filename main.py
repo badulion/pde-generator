@@ -24,6 +24,7 @@ def solve_equation_from_str(args):
                                              initial_condition, 
                                              domain_bounds=(args.domain_bounds,args.domain_bounds),
                                              t_max=args.t_max,
+                                             step_size=args.step_size,
                                              save_dt=args.save_dt)
         # save equation
         if not os.path.exists(args.save_dir):
@@ -59,6 +60,7 @@ def solve_batch_of_random_equations(args):
                                                  initial_condition, 
                                                  domain_bounds=(args.domain_bounds,args.domain_bounds),
                                                  t_max=args.t_max,
+                                                 step_size=args.step_size,
                                                  save_dt=args.save_dt)
             # save equation
             write_str_to_tar('\n'.join(eq_tokens), f"{seed}.tokens", output_tar_path)
@@ -92,6 +94,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--grid-size', '-g', type=int, default=128, help='Size of the grid')
     parser.add_argument('--domain-bounds', '-db', type=int, default=32, help='Size of the domain')
+    parser.add_argument('--step-size', '-st', type=float, default=0.01, help='Step size of the solver')
     parser.add_argument('--save-dt', '-dt', type=float, default=1, help='How often to save the state')
     parser.add_argument('--t_max', '-m', type=float, default=128, help='How often to save the state')
 
